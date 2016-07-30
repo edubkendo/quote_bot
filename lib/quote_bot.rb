@@ -25,7 +25,8 @@ Linux is the kernel: the program in the system that allocates the machine’s re
     match /^(\.){3} (?<name>(\S)*)/ do |client, data, match|
       quotes = DB[:quotes]
       quote = quotes.filter(name: match[:name]).to_a.sample
-      client.say(channel: data.channel, text: "#{quote[:quote_text]}")
+      text = quote[:quote_text].gsub(/(^<|>$)/, '')
+      client.say(channel: data.channel, text: "#{text}")
     end
   end
 end
